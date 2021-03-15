@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="Keluar Barang"
+            id="action_kb_custom"
+            model="mrp.production"
+            report_type="qweb-pdf"
+            name="isd_pit_source.report_kb_custom"
+            file="isd_pit_source.report_kb_custom"
+            print_report_name="
+                ('Keluar Barang - %s' % (object.name))"
+        />
+    </data>
+    <!-- report_type="qweb-html" -->
+</odoo>

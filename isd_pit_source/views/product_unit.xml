@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="pit_view_product_tree" model="ir.ui.view">
+            <field name="name">pit.view.product.tree</field>
+            <field name="model">product.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Master Unit" multi_edit="1" sample="1">
+                    <field name="name"/>
+                    <field name="serial"/>
+                    <field name="unit_type"/>
+                    <field name="merk"/>
+                    <field name="logo"/>
+                    <field name="model" optional="hide"/>
+                    <field name="location" string="Nama Outlet" optional="hide"/>
+                    <field name="owner" string="Nama Pemilik" optional="hide"/>
+                    <field name="tgl_buy" optional="hide"/>
+                    <field name="tgl_exp" optional="hide"/>
+                </tree>
+            </field>
+        </record> 
+
+        <record id="pit_view_product_form" model="ir.ui.view">
+            <field name="name">pit.view.product.form</field>
+            <field name="model">product.unit</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Master Unit">
+                    <header></header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="serial" string="Serial Number"/>
+                                <field name="model" string="Model"/>
+                                <field name="id" invisible="True"/>
+                            </group>
+                            <group>
+                                <!-- <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/> -->
+                                <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="General Information" name="general_information">
+                                <group>
+                                    <group>
+                                        <field name="owner" string="Pemilik Unit"/>
+                                        <field name="location" string="Nama Outlet"/>
+                                        <field name="no_tlp" string="Telp"/>
+                                        <field name="pic" string="PIC"/>
+                                        <field name="no_reges"/>
+                                        <field name="tgl_buy"/>
+                                        <field name="tgl_exp"/>
+                                    </group>
+                                    <group>
+                                        <field name="merk"/>
+                                        <field name="unit_type" string="Type"/>
+                                        <field name="logo"/>
+                                        <field name="unit_categ"/>
+                                        <field name="unit_customer_id"/>
+                                        <field name="no_reges_change"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Address" name="address">
+                                <group>
+                                    <group>
+                                        <field name="alamat" string="Alamat"/>
+                                        <field name="city" string="Kota"/>
+                                        <field name="kode_pos"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record> 
+
+        <record id="pit_view_product_kanban" model="ir.ui.view">
+            <field name="name">pit.view.product.kanban</field>
+            <field name="model">product.unit</field>
+            <field name="arch" type="xml">
+                <kanban sample="1">
+                    <field name="id"/>
+                    <field name="unit_type"/>
+                    <field name="model"/>
+                    <field name="serial"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('product.unit', 'image', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details" style="padding-left:0">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="model"/>
+                                        [<field name="description"/>]
+                                    </strong>
+                                </div>
+                                <div>
+                                    Serial : <field name="serial"/>
+                                </div>
+                                <div>
+                                    Type : <field name="unit_type"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="pit_view_product_search" model="ir.ui.view">
+            <field name="name">pit.view.product.search</field>
+            <field name="model">product.unit</field>
+            <field name="arch" type="xml">
+                <search string="Master Unit">
+                    <field name="name"/>
+                    <field name="serial"/>
+                    <field name="unit_type"/>
+                    <field name="merk"/>
+                    <field name="logo"/>
+                    <field name="model"/>
+                    <field name="location" string="Nama Outlet" />
+                    <field name="owner" string="Nama Pemilik"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="pit_view_product_action">
+			<field name="name">Master Units</field>
+			<field name="res_model">product.unit</field>
+			<field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="pit_view_product_kanban"/>
+            <field name="search_view_id" ref="pit_view_product_search"/>
+		</record>
+
+        <menuitem id="fsm_menu_unit"
+            name="Master Unit"
+            sequence="35"
+            parent="industry_fsm.fsm_menu_root"
+            groups="industry_fsm.group_fsm_manager"/>
+
+        <menuitem id="menu_pit_product_view" 
+            name="Master Unit" 
+            action="pit_view_product_action" 
+            parent="isd_pit_source.fsm_menu_unit" 
+            sequence="10"/>
+    </data>
+</odoo>

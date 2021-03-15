@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_bpb_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <!-- <t t-call="isd_report_si.header_custom_si"> -->
+        <t t-call="web.basic_layout">
+    <!--  Header  -->
+
+          <div class="page" >
+              <div class="" style="padding-top:10px;border:solid;border-width:2px;">
+                <center><h4><strong>BUKTI PENERIMAAN BARANG</strong></h4></center>
+                <div class="row" style="padding-right:10px;padding-left:10px;">
+                    <div class="col-4">
+                        <span>Diterima dari :</span><br/>
+                        <span t-esc="o.partner_id.name" />
+                    </div>
+                    <div class="col-4.5">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Bank</td>
+                                <td > : </td>
+                                <td><span t-esc="o.journal_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>A/C</td>
+                                <td> : </td>
+                                <td>
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No. Cek/BG</td><td> : </td><td><span t-esc="o.payment_method_id.name"/></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="col-3.5">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">No. </td>
+                                <td > : </td>
+                                <td><span t-esc="o.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Tgl </td>
+                                <td> : </td>
+                                <td><span t-esc="o.date" t-options='{"widget": "date"}'/></td>
+                            </tr>
+
+                            <tr>
+                                <td>Tgl. Giro </td>
+                                <td> : </td>
+<!--                             <td><span t-esc="o.date_done" t-options='{"widget": "date"}'/></td>-->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="">
+                    <table style="width:100%;">
+                        <thead style="border-top:solid;border-width:2px;">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:80%;padding-left:10px;border-right:solid;border-width:2px;"><strong>Penjelasan</strong></th>
+                                <th class="text-center" style="width:20%;padding-left:10px;"><strong>Jumlah Rp.</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody  style="border-top:solid;border-width:2px;">
+                            <t t-set="tot" t-value="0"/>
+                            <tr t-foreach="o.move_id._get_reconciled_invoices_partials()" t-as='line'>
+                                <t t-set="amount" t-value="line[1]"/>
+                                <t t-set="inv" t-value="line[2].move_id"/>
+                                <t t-set="tot" t-value="tot+inv.amount_total"/>
+                                <td style="padding-left:10px;border-right:solid;border-width:2px;"><t t-esc="inv.name" /></td>
+                                <td class="text-right" style="padding-right:10px;"><t t-esc="'{:,.0f}'.format(inv.amount_total)" /></td>
+                            </tr>
+                            <tr >
+                                <td style="border-right:solid;border-width:2px;">&amp;nbsp;</td>
+                                <td style="">&amp;nbsp;</td>
+                            </tr>
+                            <tr >
+                                <td style="border-right:solid;border-width:2px;">&amp;nbsp;</td>
+                                <td style="">&amp;nbsp;</td>
+                            </tr>
+                            <tr >
+                                <td style="padding-left:10px;border-right:solid;border-width:2px;">Perincian &amp; Kwitansi terlampir </td>
+                                <td style=""></td>
+                            </tr>
+                        </tbody>
+                        <tfoot style="border-top:solid;border-bottom:solid;border-width:2px;">
+                            <tr>
+                                <t t-set="terbilang_text" t-value="o.filtered(lambda x: x.id)"/>
+                                <t t-set="nilai_text" t-value="terbilang_text.isd_amount_to_text(o.amount)"/>
+                                <td style="padding-left:10px;border-right:solid;border-width:2px;">Terbilang : <t t-esc="nilai_text" /></td>
+                                <td class="text-right" style="padding-right:10px;"><strong><t t-esc="'{:,.0f}'.format(tot)" /></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="">
+                    <table style="width:100%;height:100px">
+                        <tr >
+                            <th class="text-center" style="width:20%;"><strong>Dibuat Oleh :</strong></th>
+                            <th class="text-center" style="width:20%;"><strong>Diperiksa Oleh :</strong></th>
+                            <th class="text-center" style="width:20%;"><strong>Disetujui Oleh :</strong></th>
+                            <th class="text-center" style="width:20%;"><strong>Dibukukan Oleh :</strong></th>
+                            <th class="text-center" style="width:20%;"><strong>Diterima Oleh :</strong></th>
+                        </tr>
+                    </table>
+
+                </div>
+                <br></br>
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="report_bpb_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_bpb_custom_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

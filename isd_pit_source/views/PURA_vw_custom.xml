@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_pura_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.user_id.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <!-- <t t-call="isd_report_si.header_custom_si"> -->
+        <div class="header">
+            <center><h4><strong>Memo Permintaan Barang</strong></h4></center>
+            <div class="row">
+
+                <div class="col-2">
+
+                    <span >Kepada Yth : </span><br></br>
+                    <span ><t t-esc="o.user_id.name"/></span><br></br>
+
+                </div>
+                <div class="col-5">
+                    <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:20%">No. MPB</td>
+                              <td >:</td>
+                              <td ><t t-esc="o.name"/></td>
+                          </tr>
+                          <tr>
+                              <td >Tgl. MPB </td>
+                              <td >:</td>
+<!--                              <td ><span t-esc="o.ordering_date.strftime('%d %B %Y')" /></td>-->
+                              <td >
+                                  <t t-if="o.ordering_date">
+                                    <span t-esc="o.ordering_date.strftime('%d %B %Y')" />
+                                  </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td >Peruntukan</td>
+                              <td >:</td>
+                              <td ><t t-esc="o.description"/></td>
+                          </tr>
+                    </table>
+                </div>
+                <div class="col-5">
+                    <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:30%">No. Order Service</td>
+                              <td >:</td>
+                              <td ></td>
+<!--                              <td ><t t-esc="o.name"/></td>-->
+                          </tr>
+                          <tr>
+                              <td >No. Ref. Lain</td>
+                              <td >:</td>
+                              <td ><span t-esc="o.origin" /></td>
+                          </tr>
+
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+        <t t-call="web.basic_layout">
+    <!--  Header  -->
+
+          <div class="page" style="">
+              <div class="" style="padding-top:10px;">
+                  <div>
+                    <table border="0" style="width:100%">
+                        <thead style="">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:5%;padding-left:5px;border:solid;border-width:1px;"><strong>No</strong></th>
+                                <th class="text-center" style="width:30%;padding-left:7px;border:solid;border-width:1px;"><strong>Kode Barang</strong></th>
+                                <th class="text-center" style="width:45%;padding-left:5px;border:solid;border-width:1px;"><strong>Nama Barang</strong></th>
+                                <th class="text-center" style="width:20%;padding-left:5px;border:solid;border-width:1px;" ><strong>Qty</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <t t-set="no" t-value="0" />
+                            <t t-foreach="o.line_ids" t-as='line'>
+                                <tr >
+                                    <t t-set="no" t-value="no+1" />
+                                    <td class="text-right" style="padding-right:10px;"><t t-esc="no"/></td>
+                                    <td ><t t-esc="line.product_id.default_code" /></td>
+                                    <td ><t t-esc="line.product_id.name" /></td>
+                                    <td class="text-right" ><t t-esc="'{:,.0f}'.format(line.product_qty)" />  <t t-esc="line.product_uom_id.name" /></td>
+                                </tr>
+                                <tr >
+                                    <td ></td>
+                                    <td colspan="2"> Keterangan : U/ <t t-esc="line.product_description_variants" /> </td>
+                                    <td ></td>
+                               </tr>
+                            </t>
+
+
+                        </tbody>
+                    </table>
+                  </div>
+
+
+                  <br></br>
+
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="report_pura_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_pura_custom_document" t-lang="o.user_id.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

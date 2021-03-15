@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.ui.view" id="view_product_template_btn_avail">
+		<field name="name">product.btn_avail_view</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='invoicing']" position="inside">
+                <field name="isd_total_work_hour" attrs="{'invisible': [('type','!=','service')]}"/>
+                <field name="sts_service_unit" widget="radio" attrs="{'invisible': [('type','!=','service')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+	<!--
+	<record model="ir.ui.view" id="product_template_sale_form_view_isd">
+        <field name="name">product.template.sales.isd</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale_timesheet.view_product_timesheet_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_policy']" position="inside">
+				<field name="isd_total_work_hour" attrs="{'invisible': [('type','!=','service')]}"/>
+			</xpath>
+        </field>
+    </record>
+
+
+	<record model="ir.ui.view" id="view_product_template_btn_avail">
+		<field name="name">product.btn_avail_view</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='service_policy']" position="after">
+					<field name="isd_total_work_hour" attrs="{'invisible': [('type','!=','service')]}"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+	-->
+</odoo>

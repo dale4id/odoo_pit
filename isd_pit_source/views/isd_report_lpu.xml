@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="isd_lpu_report_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
+    <!--  isi template     -->
+        <div class="page">
+            <div class="row">
+                    <div class="col-12" style="padding-left:0">
+                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="width:200px; height:auto" alt="Logo"/><br></br>
+                        <h5>Laporan Pengecekan Unit (LPU)</h5>
+                    </div>   
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">No</td>
+                                <td style="width:3%">:</td>
+                                <td><span t-esc="o.name_seq_fs"/></td>
+                            </tr>
+                            <tr>
+                                <td>Kode Mitra</td>
+                                <td>:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Nama Outlet</td>
+                                <td>:</td>
+                                <td><span t-esc="o.nama_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Alamat</td>
+                                <td>:</td>
+                                <td><span t-esc="o.alamat_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Kota</td>
+                                <td>:</td>
+                                <td><span t-esc="o.kota_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Kode Pos</td>
+                                <td>:</td>
+                                <td><span t-esc="o.zipcode_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Unit</td>
+                                <td>:</td>
+                                <td><span t-esc="o.code_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Logo</td>
+                                <td>:</td>
+                                <td><span t-esc="o.logo_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Merk</td>
+                                <td>:</td>
+                                <td><span t-esc="o.merk_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>:</td>
+                                <td><span t-esc="o.type_lpu"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Model</td>
+                                <td style="padding-right:10px">:</td>
+                                <td><span t-esc="o.model_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>No. Seri</td>
+                                <td>:</td>
+                                <td><span t-esc="o.serial_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Kategori Unit</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kategori_lpu == '1'">
+                                        <span>Unit Besar</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>Unit Kecil</span>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No. Registrasi</td>
+                                <td>:</td>
+                                <td><span t-esc="o.noreges_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>No. Registrasi Pengganti</td>
+                                <td>:</td>
+                                <td><span t-esc="o.noreges_ganti_lpu"/></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal</td>
+                                <td>:</td>
+                                <td><span t-esc="o.tanggal_lpu"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Sumber Listrik</td>
+                                <td style="width:3%">:</td>
+                                <td>
+                                    <t t-if="o.listrik_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>-</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tegangan</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.tegangan_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kabel Power</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kabel_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Wiring</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.wiring_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kapasitor</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kapasitor_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Relay</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.relay_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Overload</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.overload == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PTC</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.ptc == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Switch</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.switch == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fan Evaporator</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.fan_eva == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Fan Kondensor</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.fan_kon == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Timer</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.timer == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lampu TL/FL</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.lampu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ballast</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.ballast_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Thermostat</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.thermostat_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kompressor</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kompresor_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kondensor Aux/Skin</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kondensor == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Evaporator</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.eva == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kapiler</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kapiler == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Filter</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_filter == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sambungan Las</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.las == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Body Luar</td>
+                                <td style="width:3%">:</td>
+                                <td>
+                                    <t t-if="o.body_out == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>-</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Body Dalam</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.body_in == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Logo</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_logo == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pintu/Frame/Kaca</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.pintu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Karet Pintu</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.karet == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Top Cover</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.top_cover == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Engsel</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.engsel == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Roda/Adjuster</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.roda == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Handle Pintu</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.handle == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kunci</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.kunci == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bunga Es</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.bunga_lpu == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Grill Depan</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.grill_on == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Grill Belakang</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.grill_off == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Arcrilic Advertising</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_arc == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Cover L/R</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_cover == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Rak/Keranjang</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_rak == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Price Menu</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_price == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pembuangan Air</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.buang_air == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Isi Produk</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.cek_isi == 'True'"><span>O</span></t>
+                                    <t t-else=""><span>X</span></t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr><td>Foto Unit</td></tr>
+                            <tr>
+                                <td>
+                                    <img t-if="o.image_unit" t-att-src="image_data_uri(o.image_unit)" style="width:200px; height:auto" alt="Foto Unit"/>
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr><td>Foto Kerusakan</td></tr>
+                            <tr>
+                                <td>
+                                    <img t-if="o.image_rusak" t-att-src="image_data_uri(o.image_rusak)" style="width:200px; height:auto" alt="Foto Unit"/>
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Hasil Akhir Analisa</td>
+                                <td style="width:3%">:</td>
+                                <td><span t-esc="o.analisa_lpu"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:25%">Hasil Akhir/Keterangan </td>
+                                <td style="width:3%">:</td>
+                                <td><span t-esc="o.akhir_lpu"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-7" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr><td>Part yang diganti</td></tr>
+                            <tr>
+                                <td>1.<span t-esc="o.product1_lpu" style="margin-left:10px"/></td>
+                            </tr>
+                            <tr>
+                                <td>2.<span t-esc="o.product2_lpu" style="margin-left:10px"/></td>
+                            </tr>
+                            <tr>
+                                <td>3.<span t-esc="o.product3_lpu" style="margin-left:10px"/></td>
+                            </tr>
+                            <tr>
+                                <td>4.<span t-esc="o.product4_lpu" style="margin-left:10px"/></td>
+                            </tr>
+                            <tr>
+                                <td>5.<span t-esc="o.product5_lpu" style="margin-left:10px"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr><td>Teknisi</td></tr>
+                            <tr>
+                                <td>
+                                    <img t-if="o.image_teknisi" t-att-src="image_data_uri(o.image_teknisi)" style="width:200px; height:auto" alt="Foto Unit"/>
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" style="margin-top:10px; padding-left:0">
+                        <table border="0" style="width:100%">
+                            <tr><td>Customer</td></tr>
+                            <tr>
+                                <td>
+                                    <img t-if="o.image_customer" t-att-src="image_data_uri(o.image_customer)" style="width:200px; height:auto" alt="Foto Unit"/>
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>
+            </div>
+        </div>
+
+        </t>
+    </t>
+</template>
+
+<template id="isd_lpu_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.isd_lpu_report_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

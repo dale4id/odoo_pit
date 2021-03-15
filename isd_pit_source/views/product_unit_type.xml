@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="pit_view_product_unit_type_tree" model="ir.ui.view">
+            <field name="name">pit.view.unit.type.tree</field>
+            <field name="model">unit.type</field>
+            <field name="arch" type="xml">
+                <tree string="Master Unit Type">
+                    <field name="name"/>
+                    <field name="unit_code"/>
+                </tree>
+            </field>
+        </record> 
+
+        <record id="pit_view_product_unit_type_form" model="ir.ui.view">
+            <field name="name">pit.view.unit.type.form</field>
+            <field name="model">unit.type</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Master Unit Type">
+                    <header></header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Name"/>
+                                <field name="unit_code" string="Type Code"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record> 
+
+        <record model="ir.actions.act_window" id="pit_view_product_type_action">
+			<field name="name">Master Units Type</field>
+			<field name="res_model">unit.type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+        <menuitem id="menu_pit_product_type_view" 
+            name="Master Unit Type" 
+            action="pit_view_product_type_action" 
+            parent="isd_pit_source.fsm_menu_unit" 
+            sequence="10"/>
+    </data>
+</odoo>

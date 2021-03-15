@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="isd_helpdesk_team_form">
+            <field name="name">helpdesk.team.form.isd</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk_fsm.helpdesk_team_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='field_service']" position='inside'>
+                    <div class="col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="leader_user_id"/>
+                            <div class="text-muted">
+                                PIC contact by wa messaging
+                            </div>
+                            <field name="leader_user_id" />
+                        </div>
+                    </div>
+				</xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

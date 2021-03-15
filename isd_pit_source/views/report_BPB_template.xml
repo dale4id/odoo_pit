@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="isd_bpb_report_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
+          <div class="page" style="border:solid;border-width:1px;">
+              <div class="container-fluid" style="padding-top:10px;">
+                <center><h4><strong>Bukti Pengeluaran Bank</strong></h4></center>
+                <br></br>
+                <div class="row">
+                    <div class="col-4">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td>Dibayarkan Kepada :</td>
+                            </tr>
+                            <tr>
+                                <td><span t-esc="o.paid_to"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-4">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:10%">Bank</td>
+                                <td style="width:3%">:</td>
+                                <td>
+                                    <span t-esc="o.journal_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>A/C</td>
+                                <td>:</td>
+                                <td>
+                                    <!-- <span t-esc="o.partner_id.street"/> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No.Cek/BG</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-esc="o.no_cek"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-4">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:15%">No.</td>
+                                <td style="padding-right:5px">:</td>
+                                <td>
+                                    <span t-esc="o.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tgl</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-esc="o.date" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tgl. Giro</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-esc="o.tgl_giro" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <br></br>
+                <br></br>
+                <div>
+                    <table style="width:100%;">
+                        <thead style="border:solid;border-width:1px;">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:50%"><strong>Penjelasan</strong></th>
+                                <th class="text-center" style="width:25%"><strong>Jumlah Rp.</strong></th>
+                                <th class="text-center" style="width:25%"><strong>No.COA</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="sub_total" t-value="0" />
+                            <tr t-foreach="o.line_ids" t-as='line'>
+                                <t t-if="line.account_id.name != line.journal_id.name">
+                                    <td>
+                                        <span t-esc="line.name" style="margin-left:3px"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="line.credit &gt; line.debit">
+                                            - Rp. <span t-esc="'{:,.0f}'.format(line.credit)"/>
+                                        </t>
+                                        <t t-else="">
+                                            Rp. <span t-esc="'{:,.0f}'.format(line.debit)"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="line.account_id.code"/>
+                                    </td>
+
+                                    <t t-set="sub_total" t-value="sub_total + (line.debit - line.credit)" />
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br></br>
+                <br></br>
+
+                <div class="container-fluid">
+                    <div class="row" style="border:solid;border-width:1px;padding-top:5px;">
+                    <div class="col-6">
+                        <t t-set="terbilang_text" t-value="o.filtered(lambda x: x.id)"/>
+                        <t t-set="nilai_text" t-value="terbilang_text.isd_amount_to_text(sub_total)"/>
+                        <strong><span>Terbilang :</span><span t-esc="nilai_text" style="margin-left:5px"/></strong>
+                    </div>
+                    <div class="col-3">
+                        <center><strong><span t-esc="'{:,.0f}'.format(sub_total)" /></strong></center>
+                    </div>
+                    <div class="col-3">
+                        <center><strong></strong></center>
+                    </div>
+                    </div>
+                </div>
+
+                <br></br>
+                <br></br>
+
+                <div class="container-fluid">
+                    <div class="row" style="border:solid;border-width:1px;padding-top:5px;">
+                        <div class="col-2">
+                            <center><strong><p>Dibuat Oleh :</p><br/><br/><br/><br/></strong></center>
+                        </div>
+                        <div class="col-2">
+                            <center><strong><p>Diperiksa Oleh :</p><br/><br/><br/><br/></strong></center>
+                        </div>
+                        <div class="col-2">
+                            <center><strong><p>Disetujui Oleh :</p><br/><br/><br/><br/></strong></center>
+                        </div>
+                        <div class="col-3">
+                            <center><strong><p>Dibukukan Oleh : </p><br/><br/><br/><br/></strong></center>
+                        </div>
+                        <div class="col-3">
+                            <center><strong><p>Diterima Oleh :</p><br/><br/><br/><br/></strong></center>
+                        </div>
+                    </div>
+                </div>
+
+                <br></br>
+
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="isd_bpb_report">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.isd_bpb_report_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

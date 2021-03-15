@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_kb_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.user_id.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <!-- <t t-call="isd_report_si.header_custom_si"> -->
+        <div class="header">
+            <div class="row">
+                <div class="col-4">
+
+                </div>
+                <div class="col-4">
+                    <center><h4><strong>Keluar Barang</strong></h4></center>
+                </div>
+                <div class="col-4">
+                    <p class="text-right">Rev : 0</p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6">
+                    <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:25%">No. Bukti</td>
+                              <td >:</td>
+                              <td ><t t-esc="o.name"/></td>
+                          </tr>
+                          <tr>
+                              <td >Tgl Bukti </td>
+                              <td >:</td>
+<!--                              <td ><span t-esc="o.ordering_date.strftime('%d %B %Y')" /></td>-->
+                              <td >
+                                  <t t-if="o.date_planned_start">
+                                    <span t-esc="o.date_planned_start.strftime('%d %B %Y')" />
+                                  </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td >No. Ref Service</td>
+                              <td >:</td>
+                              <td ></td>
+                          </tr>
+                          <tr>
+                              <td >Quantity</td>
+                              <td >:</td>
+                              <td ><t t-esc="'{:,.0f}'.format(o.product_uom_qty)" /> <t t-esc="o.product_uom_id.name" /></td>
+                          </tr>
+                          <tr>
+                              <td >Keterangan</td>
+                              <td >:</td>
+                              <td ><t t-esc="o.product_description_variants"/></td>
+                          </tr>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:30%">Gudang </td>
+                              <td >:</td>
+                              <td ><t t-esc="o.location_dest_id.complete_name"/></td>
+                          </tr>
+                          <tr>
+                              <td >Cabang </td>
+                              <td >:</td>
+                              <td ><t t-esc="o.location_dest_id.location_id.complete_name"/></td>
+                          </tr>
+                          <tr>
+                              <td >No. Ref Lain </td>
+                              <td >:</td>
+                              <td ><span t-esc="o.origin" /></td>
+                          </tr>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+        <t t-call="web.basic_layout">
+    <!--  Header  -->
+
+          <div class="page" style="">
+              <div class="" style="padding-top:10px;">
+                  <div>
+                    <table border="0" style="width:100%">
+                        <thead style="border:solid;border-width:1px;">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:5%;padding-left:5px;"><strong> No </strong></th>
+                                <th class="" style="width:30%;padding-left:7px;"><strong> Kode Barang / PNI </strong></th>
+                                <th class="" style="width:45%;padding-left:5px;"><strong> Nama Barang </strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;" ><strong> Qty </strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;" ><strong> Satuan </strong></th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <t t-set="no" t-value="0" />
+                            <t t-foreach="o.move_raw_ids" t-as='line'>
+                                <tr >
+                                    <t t-set="no" t-value="no+1" />
+                                    <td class="text-right" style="padding-right:10px;"><t t-esc="no"/></td>
+                                    <td ><t t-esc="line.product_id.default_code" /></td>
+                                    <td ><t t-esc="line.product_id.name" /></td>
+                                    <td class="text-right" style="padding-right:10px;"> <t t-esc="'{:,.0f}'.format(line.quantity_done)" />  </td>
+                                    <td class="" > <t t-esc="line.product_uom.name" /> </td>
+                                </tr>
+                            </t>
+
+
+                        </tbody>
+                    </table>
+                  </div>
+
+
+                  <br></br>
+
+              </div>
+              <br></br>
+              <br></br>
+              <div class="row" style="border:solid;border-width:1px;padding-top:5px;">
+                    <div class="col-4">
+                        <center><strong><p>Penerima</p><br/><br/><p>ARI ARSA TEKNIK</p></strong></center>
+                    </div>
+                    <div class="col-4">
+                        <center><strong><p>Gudang</p><br/><br/><p>(........................)</p></strong></center>
+                    </div>
+                    <div class="col-4">
+                        <center><strong><p>Hormat Kami,</p><br/><br/><p>ARI PURNAMA</p></strong></center>
+                    </div>
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="report_kb_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_kb_custom_document" t-lang="o.user_id.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

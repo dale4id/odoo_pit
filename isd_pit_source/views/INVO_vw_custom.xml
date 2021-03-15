@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_invo_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <div class="header">
+            <div><img t-att-src="image_data_uri(o.company_id.logo)"/></div>
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-6">
+                    <span ><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.street2"/> <t t-esc="o.company_id.zip"/></span><br></br>
+                    <span >Telp :<t t-esc="o.company_id.phone"/>, Fax :<t t-esc="o.company_id.fax_isdcustom"/></span><br></br>
+
+                </div>
+                <div class="col-6">
+                    <table border="0" style="width:100%">
+                        <tr>
+                            <td style="width:30%">Customer </td>
+                            <td > : </td>
+                            <td ><t t-esc="o.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td ><span t-esc="o.partner_id.street" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td ><span t-esc="o.partner_id.street2" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td ><span t-esc="o.partner_id.city" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+<!--            <hr color="white" style="border-top:solid; margin-top:10px; margin-bottom:15px;"></hr>-->
+        </div>
+<!--        <t t-call="web.basic_layout" >-->
+    <!--  Header  -->
+<!--        <div class="article">-->
+        <div class="article" style="padding-top:80px;">
+              <div class="page" >
+
+                <div class="row">
+                    <div class="col-4">
+                        <strong><span>No. Bukti : <t t-esc="o.name"/></span></strong>
+                    </div>
+                    <div class="col-4">
+                        <center><h4><strong>Faktur Penjualan</strong></h4></center>
+                    </div>
+                </div>
+                <div>
+                    <table border="0" style="width:100%">
+                        <thead style="">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:5%;padding-left:5px;border:solid;border-width:1px;"><strong>No.</strong></th>
+                                <th class="text-center" style="width:35%;padding-left:7px;border:solid;border-width:1px;"><strong>Spesifikasi</strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;border:solid;border-width:1px;"><strong>Satuan</strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;border:solid;border-width:1px;" ><strong>Qty</strong></th>
+                                <th class="text-center" style="width:20%;padding-left:5px;border:solid;border-width:1px;" ><strong>Currency</strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;border:solid;border-width:1px;" ><strong>Harga Satuan</strong></th>
+                                <th class="text-center" style="width:10%;padding-left:5px;border:solid;border-width:1px;" ><strong>Jumlah</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-bottom:groove ;border-width:1px;">
+                            <t t-set="no" t-value="0" />
+                            <t t-set="jumtot" t-value="0" />
+                            <t t-set="total_diskon" t-value="0" />
+                            <t t-foreach="o.invoice_line_ids" t-as='line'>
+
+                                <tr >
+                                    <t t-set="no" t-value="no+1" />
+                                    <t t-set="jum" t-value="line.quantity*line.price_unit" />
+                                    <t t-set="jumtot" t-value="jum+jumtot" />
+                                    <td class="text-right" style="padding-right:10px;"><t t-esc="no"/></td>
+                                    <td ><t t-esc="line.product_id.name" /></td>
+                                    <td ><t t-esc="line.product_uom_id.name" /></td>
+                                    <td class="text-right" ><t t-esc="'{:,.0f}'.format(line.quantity)" /> </td>
+                                    <td class="text-center"><t t-esc="line.currency_id.name" /></td>
+                                    <td class="text-right" ><t t-esc="'{:,.0f}'.format(line.price_unit)" /> </td>
+                                    <td class="text-right" ><t t-esc="'{:,.0f}'.format(jum)" /> </td>
+                                </tr>
+                                <t t-set="total_diskon" t-value="total_diskon + jum * (line.discount / 100)" />
+                            </t>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12" style="padding:0;">
+                  <div class="row">
+                      <t t-set="terbilang_text" t-value="o.filtered(lambda x: x.id)"/>
+                      <t t-set="nilai_text" t-value="terbilang_text.isd_amount_to_text(o.amount_total)"/>
+
+                      <div class="col-8">
+                          <p>Tgl Jatuh Tempo : <t t-esc="o.invoice_date_due.strftime('%d %B %Y')" /></p>
+                          <p># <span t-esc="nilai_text"/> #</p>
+                          <p>Note : <t t-esc="o.narration" /></p>
+                          <span><b>Surat Jalan : </b><br></br><span t-esc="o.invoice_origin"/></span><br></br>
+                      </div>
+
+                      <div class="col-4">
+                        <table class="" style="width:100%; height:83%">
+                            <tr>
+                                <td style="width:40%">Jumlah Harga Jual</td>
+<!--                                <td class="text-center">:</td>-->
+<!--                                <td style="border-right-style:hidden">Rp.</td>-->
+                                <td class="text-right"><span t-esc="'{:,.0f}'.format(jumtot)"/></td>
+                            </tr>
+                            <tr>
+                                <td style="width:40%">Discount</td>
+<!--                                <td class="text-center">:</td>-->
+<!--                                <td style="border-right-style:hidden">Rp.</td>-->
+                                <td class="text-right"><span t-esc="'{:,.0f}'.format(total_diskon)"/></td>
+                            </tr>
+                            <tr>
+                                <td>Total Penjualan</td>
+<!--                                <td class="text-center">:</td>-->
+<!--                                <td style="border-right-style:hidden">Rp.</td>-->
+                                <td class="text-right"><span t-esc="'{:,.0f}'.format(o.amount_total)"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Grand Total</b></td>
+<!--                                <td class="text-center">:</td>-->
+<!--                                <td style="border-right-style:hidden">Rp.</td>-->
+                                <td class="text-right"><span t-esc="'{:,.0f}'.format(o.amount_total)"/></td>
+                            </tr>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+                <br></br>
+                <div>
+                    <span><b>Pembayaran ditujukan ke : <br></br>- BCA KCU Puri Indah A/C No : 084322387 a/n: F. Purwadi A Bdn PIT Elektronik</b></span>
+                </div>
+                <br></br>
+
+              </div>
+        </div>
+<!--        </div>-->
+<!--        </t>-->
+    </t>
+</template>
+
+<template id="report_invo_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_invo_custom_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="Faktur Penjualan"
+            id="action_invo_custom"
+            model="account.move"
+            report_type="qweb-pdf"
+            name="isd_pit_source.report_invo_custom"
+            file="isd_pit_source.report_invo_custom"
+            paperformat="isd_pit_source.paperformat_sj_landscape"
+            print_report_name="
+                ('Invoices - %s' % (object.name))"
+        />
+    </data>
+    <!-- report_type="qweb-html" -->
+</odoo>

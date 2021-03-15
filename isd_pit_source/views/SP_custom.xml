@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_sp_landscape" model="report.paperformat">
+            <field name="name">Surat Pesanan</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+            string="Surat Pesanan"
+            id="action_sp_custom"
+            model="sale.order"
+            report_type="qweb-pdf"
+            name="isd_pit_source.report_sp_custom"
+            file="isd_pit_source.report_sp_custom"
+            paperformat="paperformat_sp_landscape"
+            print_report_name="
+                ('Surat Pesanan - %s' % (object.name))"
+        />
+    </data>
+    <!-- report_type="qweb-html" -->
+</odoo>

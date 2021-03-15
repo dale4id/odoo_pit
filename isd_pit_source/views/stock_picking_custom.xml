@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="name_ref" />
+            </xpath>
+        </field>
+        </record>
+        <record id="res_company_isd_form_inherit" model="ir.ui.view">
+            <field name="name">res.company.isd.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="fax_isdcustom" />
+                </xpath>
+                <xpath expr="//page[@name='general_info']" position="after">
+                    <page string="Address Delivery" name="address_deli">
+                        <group>
+                            <field name="address_line"
+                                widget="section_and_note_one2many">
+                                <form string="Address Line">
+                                    <group>
+                                        <field name="name" placeholder="Name"/>
+                                        <label for="isd_street_pengiriman" string="Address"/>
+                                        <div class="o_address_format">
+                                            <field name="isd_street_pengiriman" placeholder="Street" class="o_address_street"/>
+                                            <field name="isd_city_pengiriman" placeholder="City" class="o_address_street"/>
+                                            <field name="isd_country_id_pengiriman" placeholder="Country" class="o_address_country" options='{"no_open": True}'/>
+                                        </div>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_partner_isd_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.isd.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="isd_contact_person" />
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_isd_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.isd.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="isd_phone" />
+                    <field name="isd_pic" />
+                </xpath>
+            </field>
+        </record>
+       <record id="purchase_order_isd_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.isd.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="isd_address_pengiriman" placeholder="Delivery Address" class="o_address_country" options='{"no_open": True}'/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <attribute name="string">No. MPB / No. PR</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='origin']" position="after">-->
+<!--                    <field name="isd_no_mpb_or_pr" />-->
+<!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_sj_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <!-- <t t-call="isd_report_si.header_custom_si"> -->
+        <t t-call="web.basic_layout">
+    <!--  Header  -->
+
+          <div class="page" style="border:solid;border-width:1px;">
+              <div class="container-fluid" style="padding-top:10px;">
+                <center><h4><strong>Surat Jalan Masuk</strong></h4></center>
+                <div class="row">
+                    <div class="col-7">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:30%">SJ. Supllier</td>
+                                <td style="width:3%">:</td>
+                                <td><span t-esc="o.name_ref"/></td>
+                            </tr>
+                            <tr>
+                                <td>No. MPB / No. PR</td>
+                                <td>:</td>
+                                <td>
+                                    <span><span t-esc="o.purchase_id.origin"/></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No. PO</td><td>:</td><td><span t-esc="o.origin"/></td>
+                            </tr>
+<!--                            <tr>-->
+<!--                                <td>No. PR</td><td>:</td><td></td>-->
+<!--                            </tr>-->
+                            <tr>
+                                <td>Keterangan</td><td>:</td><td><span t-esc="o.note"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <table border="0" style="width:100%">
+                            <tr>
+                                <td style="width:30%">No. Bukti</td>
+                                <td style="padding-right:5px">:</td>
+                                <td><span t-esc="o.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Tgl Bukti</td>
+                                <td>:</td>
+                                <td><span t-esc="o.date_done" t-options='{"widget": "date"}'/></td>
+                            </tr>
+
+                            <tr>
+                                <td>No. SJ In</td>
+                                <td>:</td>
+<!--                             <td><span t-esc="o.date_done" t-options='{"widget": "date"}'/></td>-->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <br></br>
+                <br></br>
+                <div>
+                    <table style="width:100%;">
+                        <thead style="border:solid;border-width:1px;">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-left" style="width:4%;padding-left:5px;"><strong>No</strong></th>
+                                <th class="text-left" style="width:30%;padding-left:7px;"><strong>Kode</strong></th>
+                                <th class="text-left" style="width:40%;padding-left:5px;"><strong>Barang</strong></th>
+                                <th class="text-left" style="width:25%;padding-left:5px;" ><strong>Qty</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="no" t-value="0" />
+                            <tr t-foreach="o.move_ids_without_package" t-as='line'>
+                                <t t-set="no" t-value="no+1" />
+                                <td class="text-right"><t t-esc="no"/></td>
+                                <td><t t-esc="line.product_id.default_code" /></td>
+                                <td><t t-esc="line.product_id.name" /></td>
+                                <td><t t-esc="line.quantity_done" /> <t t-esc="line.product_uom.name" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br></br>
+                <br></br>
+
+                <div class="container-fluid">
+                    <div class="row" style="border:solid;border-width:1px;padding-top:5px;">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                        <center><strong><p>Penerima</p><br/><br/><p>(........................)</p></strong></center>
+                    </div>
+                    <div class="col-4">
+                        <center><strong><p>Verifikasi</p><br/><br/><p>ARI PURNAMA</p></strong></center>
+                    </div>
+                    </div>
+                </div>
+                <br></br>
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="report_sj_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_sj_custom_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_po_custom_document">
+    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+    <t t-call="web.html_container">
+        <!-- <t t-call="isd_report_si.header_custom_si"> -->
+        <div class="header">
+            <div class="row">
+                <div class="col-6">
+                    <strong style="font-size:20px"><span t-esc="o.company_id.name"/></strong><br></br>
+                    <span style="font-size:12px"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.street2"/></span><br></br>
+                    <span style="font-size:12px; margin-right:5px">Telp :<t t-esc="o.company_id.phone"/></span><br></br>
+                    <span style="font-size:12px; margin-right:5px">Fax :<t t-esc="o.company_id.fax_isdcustom"/></span><br></br>
+
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+
+                        </div>
+                        <div class="col-6">
+                            <div class="text">
+
+                                <strong>Purchase Order</strong>
+                                <div>No : <t t-esc="o.name"/></div>
+                                <t t-if="o.effective_date">
+                                    <div>Tgl : <t t-esc="o.effective_date.strftime('%d %B %Y')" /></div>
+                                </t>
+                                <t t-else=""><div>Tgl : <t t-esc="o.date_approve.strftime('%d %B %Y')" /></div></t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr color="black" style="border-top:solid; margin-top:10px; margin-bottom:15px;"></hr>
+        </div>
+        <t t-call="web.basic_layout">
+    <!--  Header  -->
+
+          <div class="page" style="">
+              <div class="container-fluid" style="padding-top:10px;">
+                  <div>Kepada Yth.</div>
+                  <h6><strong><t t-esc="o.partner_id.name"/></strong></h6>
+                  <div><b><t t-esc="o.partner_id.city"/></b></div>
+                  <p>Up : <t t-esc="o.partner_id.isd_contact_person"/></p>
+                  <p>Dengan hormat,</p>
+                  <p>Mohon bantuannya agar dikirimkan barang sebagai berikut : </p>
+                  <div>
+                    <table style="width:100%;border:solid;border-width:1px;">
+                        <thead style="">
+                            <tr class="" style="padding-left:2px">
+                                <th class="text-center" style="width:4%;padding-left:5px;border:solid;border-width:1px;"><strong>No</strong></th>
+                                <th class="text-center" style="width:35%;padding-left:7px;border:solid;border-width:1px;"><strong>Uraian</strong></th>
+                                <th class="text-center" style="width:11%;padding-left:5px;border:solid;border-width:1px;"><strong>Qty</strong></th>
+                                <th class="text-center" style="width:25%;padding-left:5px;border:solid;border-width:1px;" ><strong>Harga @ (RP)</strong></th>
+                                <th class="text-center" style="width:25%;padding-left:5px;border:solid;border-width:1px;" ><strong>Total (RP)</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody style="border:solid;border-width:1px;">
+                            <t t-set="no" t-value="0" />
+                            <t t-set="jum" t-value="0" />
+                            <t t-set="jumtax" t-value="0" />
+
+                            <tr t-foreach="o.order_line" t-as='line'>
+                                <t t-set="no" t-value="no+1" />
+                                <t t-set="jum" t-value="jum+line.price_subtotal" />
+                                <t t-set="jumtax" t-value="jumtax+line.price_tax" />
+                                <td class="text-right" style="padding-right:10px;border-right:solid;border-width:1px;"><t t-esc="no"/></td>
+                                <td style="border-right:solid;border-width:1px;"><t t-esc="line.name" /></td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(line.product_qty)" />  <t t-esc="line.product_uom.name" /></td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(line.price_unit)" /> </td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(line.price_subtotal)" /> </td>
+                            </tr>
+                            <tr >
+                                <td style="border-right:solid;border-width:1px;">&amp;nbsp;</td>
+                                <td style="border-right:solid;border-width:1px;">&amp;nbsp;</td>
+                                <td style="border-right:solid;border-width:1px;">&amp;nbsp;</td>
+                                <td style="border-right:solid;border-width:1px;">&amp;nbsp;</td>
+                                <td style="border-right:solid;border-width:1px;">&amp;nbsp;</td>
+                            </tr>
+                            <tr >
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;padding-left:5px;">Jumlah</td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(jum)"/></td>
+                            </tr>
+                            <t t-if="jumtax!=0">
+                            <tr>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;padding-left:5px;">PPN 10%</td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(jumtax)"/></td>
+                            </tr>
+                            </t>
+                            <tr>
+                                <t t-set="tot" t-value="jum+jumtax" />
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;"></td>
+                                <td style="border-right:solid;border-width:1px;padding-left:5px;">Total Rp</td>
+                                <td class="text-right" style="border-right:solid;border-width:1px;"><t t-esc="'{:,.0f}'.format(tot)"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+
+                  <br></br>
+                  <div class="row">
+                      <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:20%">Syarat Pembayaran </td>
+                              <td >:</td>
+                              <td ><t t-esc="o.payment_term_id.name"/> setelah barang dan faktur diterima lengkap.</td>
+                          </tr>
+                          <tr>
+                              <td >Tgl. Pengiriman </td>
+                              <td >:</td>
+                              <td ><span t-esc="o.date_planned.strftime('%d %B %Y')" /></td>
+                          </tr>
+                          <tr>
+                              <td >Alamat Pengiriman </td>
+                              <td >:</td>
+                              <td ><span t-esc="o.isd_address_pengiriman.isd_street_pengiriman" /><t t-if="o.isd_address_pengiriman.isd_street_pengiriman and o.isd_address_pengiriman.isd_city_pengiriman"> , </t> <span t-esc="o.isd_address_pengiriman.isd_city_pengiriman" /></td>
+                          </tr>
+                      </table>
+
+                  </div>
+                  <br/>
+                  <p>Demikian kami sampaikan, atas perhatian dan kerjasamanya kami ucapkan terima kasih.</p>
+                  <br/>
+                  <br/>
+                  <div class="row">
+                      <div class="col-4">
+                        <center>
+                            <p>Hormat Kami,</p><br/><br/><p>Purwanto</p>
+                        </center>
+                      </div>
+                      <div class="col-4">
+                        <center>
+                            <p>Mengetahui</p><br/><br/><p>Evryliana Kirnia Sari</p>
+                        </center>
+                      </div>
+                      <div class="col-4">
+                        <center>
+                            <p>Menyetujui</p><br/><br/><p>Diar Ihromi</p>
+                        </center>
+                      </div>
+                  </div>
+                  <br></br>
+                  <div class="row">
+                      <table border="0" style="width:100%">
+                          <tr>
+                              <td style="width:12%">Keterangan</td>
+                              <td style="padding-right:2px"> : </td>
+                              <td > Mohon segera difax kembali setelah ditanda tangani Harap PO dilanjutkan pada faktur/kultansi tagihan</td>
+                          </tr>
+
+                      </table>
+
+                  </div>
+              </div>
+          </div>
+        </t>
+    </t>
+</template>
+
+<template id="report_po_custom">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="isd_pit_source.report_po_custom_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

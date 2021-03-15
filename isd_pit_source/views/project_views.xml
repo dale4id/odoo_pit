@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="isd_view_task_form2">
+            <field name="name">project.task.form.isd</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+					<button name="btnOnHold" attrs="{'invisible': [('is_fsm', '=', True), ('fsm_done', '=', True)]}"
+							class="oe_highlight" string="On Hold" type="object"/>
+				</xpath>
+
+
+                <xpath expr="//div[@name='button_box']" position='inside'>
+                    <!--
+					<button name="btnCallUnit" type="object" class="oe_stat_button" icon="fa-cube">
+                        <span class="o_stat_text">Unit</span>
+                    </button>
+                    -->
+                    <button name="btnCallSupervisor" type="object" class="oe_stat_button" icon="fa-comments" attrs="{'invisible': [('helpdesk_ticket_id', '=', False)]}">
+                        <span class="o_stat_text">Contact Supervisor</span>
+                    </button>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position='before'>
+                    <field name="task_no" attrs="{'invisible': [('task_no', '=', 'New')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position='before'>
+                    <field name="default_code" />
+                </xpath>
+                <xpath expr="//page[@name='extra_info']" position='after'>
+					<page string='Additional Setting'>
+                        <group>
+                            <group>
+                                <field name="otheruser_id" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="res_users" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="user_checking" widget="many2many_tags" attrs="{'readonly': True}" />
+                                <field name="user_fixing" widget="many2many_tags" attrs="{'readonly': True}" />
+                                <field name="total_worksheet_product" attrs="{'readonly': True}" />
+                            </group>
+                        </group>
+					</page>
+				</xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_task_form2_inherit_isd">
+			<field name="name">view.task.form2.inherit.isd</field>
+            <field name="model">project.task</field>
+			<field name="inherit_id" ref="industry_fsm_sale.view_task_form2_inherit"/>
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_fsm_view_material']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible': ['|', '|', ('partner_id', '=', False), ('allow_material', '=', False),
+                            '&amp;', ('encode_uom_in_days', '=', False),
+                            '&amp;', ('display_timer_start_primary', '=', False), ('display_timer_start_secondary', '=', False)
+                        ]}
+                    </attribute>
+                </xpath>
+			</field>
+		</record>
+
+
+
+        <record model="ir.ui.view" id="project_task_view_list_fsm_inherit">
+			<field name="name">project.task.tree.fsm.inherit</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="industry_fsm.project_task_view_list_fsm"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="before">
+					<field name="default_code"/>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</odoo>

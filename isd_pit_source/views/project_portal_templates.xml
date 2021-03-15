@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="isd_portal_my_worksheet" name="isd_portal_back" inherit_id="industry_fsm_report.portal_my_worksheet">
+        
+        <xpath expr="//ul[hasclass('list-group')]" position="inside">
+            <li class="list-group-item flex-grow-1">
+                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                    <div class="btn-group flex-grow-1 mr-1 mb-1">
+                        <t t-set="backend_url" t-value="'/web#model=project.task&amp;id=%s&amp;view_type=form' % (task.id)"/>
+                        <a class="btn btn-secondary btn-block o_download_btn" t-att-href="backend_url"
+                           title="Back"><i class="fa"/> Back</a>
+                    </div>
+                </div>
+
+            </li>
+        </xpath>
+    </template>
+</odoo>

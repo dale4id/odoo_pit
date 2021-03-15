@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Report BPB"
+            id="action_report_pit_lpu"
+            model="account.move"
+            report_type="qweb-html"
+            name="isd_pit_source.isd_bpb_report"
+            file="isd_pit_source.isd_bpb_report"
+            print_report_name="
+                ('BPB - %s' % (object.name))"
+        />
+    </data>
+</odoo>
