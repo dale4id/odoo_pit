@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate='1'>
          <record id="seq_field_service_pit" model="ir.sequence">
-            <field name="name">Field Service</field>
+            <field name="name">Field Servicesss</field>
             <field name="code">project.task.sequence</field>
             <field name="prefix">FS_PIT</field>
             <field name="padding">3</field>
