@@ -1,5 +1,5 @@
 {
-    'name': 'PITeee',
+    'name': 'PIT',
     'author': 'Andryanus',
     'version': '0.1',
     'depends': [
